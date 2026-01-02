@@ -1,0 +1,152 @@
+
+//package ;
+
+import java.util.*;
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+import java.lang.*;
+
+public class Demma extends MIDlet implements Runnable{
+    
+    Display display;
+
+    private Canvas demmaCanvas;
+    
+    final int STATE_LOADING = 0;
+    final int STATE_MAIN_CHATS = 1;
+    final int STATE_CHAT = 2;
+    final int STATE_SETTINGS = 4;
+    
+    public String temp;
+    
+    private int state;
+    private int state_loading;
+    private int state_before_settings;
+    Thread loadingThread;
+
+    public int color_bg = 0;
+    public int color_font = 0;
+    public int color_selected = 0;
+    public int color_error_bg = 0;
+    public int color_error_font = 0;
+    public int color_title_bg = 0;
+    public int color_settings_bg = 0;
+    public int color_input_field = 0;
+    public int color_reply_bg = 0;
+    public int color_chat_me = 0;
+    public int color_chat_not_me = 0;
+    
+    public Command SETTINGS = new Command("Settings", Command.SCREEN, 9);
+
+    public Demma() {
+        setColors(0);
+        display=Display.getDisplay(this);
+        setStateLoading(STATE_MAIN_CHATS);
+        loadSettings();
+    }
+    
+    public void startApp() {
+    }
+
+    public void pauseApp() {
+    }
+
+    public void destroyApp(boolean unconditional) {
+    }
+    
+    public void setState(int new_state){
+        
+        if(new_state == STATE_LOADING){
+            demmaCanvas = new LoadingC(this);
+        }
+        else if(new_state == STATE_MAIN_CHATS){
+            demmaCanvas = new MainChatsC(this);
+        }
+        else if(new_state == STATE_CHAT){
+            demmaCanvas = new ChatC(this, temp);
+        }
+        else if(new_state == STATE_SETTINGS){
+            demmaCanvas = new SettingsC(this);
+            
+            if(STATE_SETTINGS != state)
+                state_before_settings = state;
+        }
+        else {
+            setState(STATE_MAIN_CHATS);
+            return;
+        }
+        
+        state = new_state;
+        
+        loadSettings();
+        
+        if(new_state != STATE_SETTINGS)
+            demmaCanvas.addCommand(SETTINGS);
+        
+        display.setCurrent(demmaCanvas);
+        demmaCanvas.repaint();
+    }
+    
+    public void setStateLoading(int state){
+        state_loading = state;
+        setState(STATE_LOADING);
+        demmaCanvas.repaint();
+        
+        loadingThread = new Thread(this);
+        loadingThread.start();
+    }
+    
+    public void returnFromSettings(){
+        setStateLoading(state_before_settings);
+    }
+    
+    public void setColors(int c){
+        if(c == 0){
+            color_bg = 0x193C19;
+            color_font = 0xEBFFFF;
+            color_selected = 0x2D622D;
+            color_error_bg = 0xB00E6F;
+            color_error_font = 0xFFEBFF;
+            color_title_bg = 0x0F190F;
+            color_settings_bg = 0x000000;
+            color_input_field = 0x627373;
+            color_reply_bg = 0x0f190f;
+            color_chat_me = 0x417341;
+            color_chat_not_me = 0x234e23;
+        }
+        else if(c == 1){
+            color_bg = 0x3C193C;
+            color_font = 0xEBEBFF;
+            color_selected = 0x622D62;
+            color_error_bg = 0xB00E6F;
+            color_error_font = 0xFFEBFF;
+            color_title_bg = 0x190F19;
+            color_settings_bg = 0x000000;
+            color_input_field = 0x190F19;
+            color_reply_bg = 0x190f19;
+            color_chat_me = 0x734173;
+            color_chat_not_me = 0x4E234E;
+        }
+        else {
+            setColors(0);
+        }
+    }
+    
+    public void loadSettings(){
+        byte[] b = SettingsC.getRecord(SettingsC.COLOR_ID);
+        if(b != null){
+            if(b[0] == 0x01)
+                setColors(1);
+            else
+                setColors(0);
+        }
+        
+    }
+    
+    public void run(){
+        if(state == STATE_LOADING){
+            setState(state_loading);
+        }
+    }
+}
+

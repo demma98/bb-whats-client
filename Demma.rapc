@@ -1,0 +1,9 @@
+MIDlet-Name: Demma
+MIDlet-Version: 0.6.9
+MIDlet-Vendor: Demma98
+MIDlet-Jar-URL: Demma.jar
+MIDlet-Jar-Size: 0
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: Demma,logo_32.png,Demma
+RIM-MIDlet-Flags-1: 0
