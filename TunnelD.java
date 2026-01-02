@@ -36,7 +36,8 @@ class TunnelD {
     }
     
     public void send(String req) throws Exception{
-        SocketConnection sc = (SocketConnection) Connector.open("socket://192.168.100.6:9000;deviceside=true;interface=wifi");
+        String host = new String(SettingsC.getRecord(SettingsC.IP_ID), "UTF-8");
+        SocketConnection sc = (SocketConnection) Connector.open("socket://" + host +";deviceside=true;interface=wifi");
 
         OutputStream os = sc.openOutputStream();
 
