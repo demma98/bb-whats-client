@@ -17,12 +17,15 @@ AutoRestart=0
 ]
 ExcludeFromBuildAll=0
 [Files
+AccountC.java
 ChatC.java
+CodeC.java
 Demma.java
 InputField.java
 InputSwitch.java
 ListC.java
 LoadingC.java
+LoginC.java
 logo.png
 logo_32.png
 logo_64.png
@@ -54,4 +57,4 @@ SystemModule=0
 Title=Demma
 Type=1
 Vendor=Demma98
-Version=0.7.0
+Version=0.7.6

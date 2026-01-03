@@ -7,12 +7,12 @@ class MainChatsC extends ListC{
     String[] chats;
     String[] ids;
     
-    Command BACK = new Command("Exit", Command.EXIT, 2);
+    Command EXIT = new Command("Exit", Command.EXIT, 2);
     
     MainChatsC(Demma app) {
         super(app);
         
-        this.addCommand(BACK);
+        this.addCommand(EXIT);
         
         try {
             TunnelD tunnel = new TunnelD();
@@ -50,7 +50,7 @@ class MainChatsC extends ListC{
     }
     
     public void commandAction(Command command, Displayable d){
-        if(command == BACK){
+        if(command == EXIT){
             app.destroyApp(false);
             app.notifyDestroyed();
         }

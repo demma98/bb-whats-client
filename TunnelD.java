@@ -5,16 +5,12 @@ import javax.microedition.io.*;
 
 class TunnelD {
     
-    String pass = "i forgor :skull:";
-    
-    private static final String aesKey = "aesEncryptionKey"; // 256 bit key
-    private static final String aesInitVector = "fds$89fK-m}@cp09"; // 16 bytes IV
-    
     TunnelD() { }
     
-    public String sendResp(String req) throws Exception{
+    public static String sendResp(String req) throws Exception{
         String host = new String(SettingsC.getRecord(SettingsC.IP_ID), "UTF-8");
         SocketConnection sc = (SocketConnection) Connector.open("socket://" + host +";deviceside=true;interface=wifi");
+        sc.setSocketOption(SocketConnection.LINGER, 7);
 
         InputStream is = sc.openInputStream();
         
@@ -38,9 +34,10 @@ class TunnelD {
         return new String( s_temp.toString().getBytes(), "UTF-8");
     }
     
-    public void send(String req) throws Exception{
+    public static void send(String req) throws Exception{
         String host = new String(SettingsC.getRecord(SettingsC.IP_ID), "UTF-8");
         SocketConnection sc = (SocketConnection) Connector.open("socket://" + host +";deviceside=true;interface=wifi");
+        sc.setSocketOption(SocketConnection.LINGER, 7);
 
         OutputStream os = sc.openOutputStream();
 
@@ -51,7 +48,7 @@ class TunnelD {
         sc.close();
     }
     
-    private String password(String s){
-        return "{" + s + ", \"password\" : \"" + encrypt(pass) + "\"}";
+    private static String password(String s){
+        return "{" + s + ", \"num\" : \"" + AccountC.getNumber(AccountC.getAccount()) + "\" , \"password\" : \"" + AccountC.getPassword(AccountC.getAccount()) + "\"}";
     }
 } 

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+RIM-COD-Module-Name: Demma
+RIM-COD-Module-Dependencies: net_rim_cldc
+MIDlet-Jar-Size: 39664
+MIDlet-1: Demma,logo_32.png,Demma
+RIM-COD-Creation-Time: 1767441832
+MIDlet-Jar-URL: Demma.jar
+RIM-COD-URL: Demma.cod
+RIM-COD-SHA1: 74 20 fc ed e4 26 b1 f0 4f 81 c7 cb da 23 84 b7 d7 53 a2 f9
+RIM-COD-Size: 31344
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Version: 0.7.6
+MIDlet-Name: Demma
+MIDlet-Vendor: Demma98
+MicroEdition-Profile: MIDP-2.0
+RIM-MIDlet-Flags-1: 0

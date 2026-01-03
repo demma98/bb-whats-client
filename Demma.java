@@ -15,7 +15,10 @@ public class Demma extends MIDlet implements Runnable{
     final int STATE_LOADING = 0;
     final int STATE_MAIN_CHATS = 1;
     final int STATE_CHAT = 2;
-    final int STATE_SETTINGS = 4;
+    final int STATE_SETTINGS = 3;
+    final int STATE_ACCOUNT = 4;
+    final int STATE_LOGIN = 5;
+    final int STATE_CODE = 6;
     
     public String temp;
     
@@ -36,12 +39,18 @@ public class Demma extends MIDlet implements Runnable{
     public int color_chat_me = 0;
     public int color_chat_not_me = 0;
     
+    public Command ACCOUNTS = new Command("Accounts", Command.SCREEN, 8);
     public Command SETTINGS = new Command("Settings", Command.SCREEN, 9);
 
     public Demma() {
         setColors(0);
         display=Display.getDisplay(this);
-        setStateLoading(STATE_MAIN_CHATS);
+        
+        if(AccountC.getNumber(AccountC.getAccount()).equals("") || AccountC.getPassword(AccountC.getAccount()).equals(""))
+            setState(STATE_ACCOUNT);
+        else
+            setStateLoading(STATE_MAIN_CHATS);
+        
         loadSettings();
     }
     
@@ -71,6 +80,15 @@ public class Demma extends MIDlet implements Runnable{
             if(STATE_SETTINGS != state)
                 state_before_settings = state;
         }
+        else if(new_state == STATE_ACCOUNT){
+            demmaCanvas = new AccountC(this);
+        }
+        else if(new_state == STATE_LOGIN){
+            demmaCanvas = new LoginC(this);
+        }
+        else if(new_state == STATE_CODE){
+            demmaCanvas = new CodeC(this);
+        }
         else {
             setState(STATE_MAIN_CHATS);
             return;
@@ -78,10 +96,16 @@ public class Demma extends MIDlet implements Runnable{
         
         state = new_state;
         
+        try{
+            loadingThread.interrupt();
+        } catch (Exception e){}
+        
         loadSettings();
         
         if(new_state != STATE_SETTINGS)
             demmaCanvas.addCommand(SETTINGS);
+        if(new_state != STATE_ACCOUNT)
+            demmaCanvas.addCommand(ACCOUNTS);
         
         display.setCurrent(demmaCanvas);
         demmaCanvas.repaint();

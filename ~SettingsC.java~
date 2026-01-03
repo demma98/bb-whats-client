@@ -132,7 +132,7 @@ class SettingsC extends ListC{
     
     public static byte[] getRecord(int id, String recordFile){
         
-        byte[] resp = new byte[]{};
+        byte[] resp = new bytes[]{};
         
         try{
             RecordStore rs = RecordStore.openRecordStore(recordFile, true);

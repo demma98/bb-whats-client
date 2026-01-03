@@ -259,6 +259,9 @@ class ListC extends Canvas implements CommandListener, Runnable{
         if(command == app.SETTINGS){
             app.setState(app.STATE_SETTINGS);
         }
+        else if(command == app.ACCOUNTS){
+            app.setState(app.STATE_ACCOUNT);
+        }
         
         repaint();
     }
