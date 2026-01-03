@@ -33,7 +33,7 @@ TunnelD.java
 ]
 HaveAlxImports=0
 HaveDefs=0
-HaveImports=1
+HaveImports=0
 [Icons
 logo_32.png
 ]
@@ -54,4 +54,4 @@ SystemModule=0
 Title=Demma
 Type=1
 Vendor=Demma98
-Version=0.7.0
+Version=0.6.9

@@ -266,13 +266,18 @@ class ChatC extends ListC{
                 state = STATE_LIST;
             }
             else{
-                if(inputField.toString().length() == 0){
-                    app.setStateLoading(app.STATE_MAIN_CHATS);
+                if(this.selectReply.equals("")){
+                    if(inputField.toString().length() == 0){
+                        app.setStateLoading(app.STATE_MAIN_CHATS);
+                    }
+                    else{
+                        inputField.clear();
+                        selectReply = "";
+                        repaint();
+                    }
                 }
                 else{
-                    inputField.clear();
                     selectReply = "";
-                    repaint();
                 }
             }
         }

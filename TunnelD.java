@@ -7,6 +7,9 @@ class TunnelD {
     
     String pass = "i forgor :skull:";
     
+    private static final String aesKey = "aesEncryptionKey"; // 256 bit key
+    private static final String aesInitVector = "fds$89fK-m}@cp09"; // 16 bytes IV
+    
     TunnelD() { }
     
     public String sendResp(String req) throws Exception{
@@ -49,6 +52,6 @@ class TunnelD {
     }
     
     private String password(String s){
-        return "{" + s + ", \"password\" : \"" + pass + "\"}";
+        return "{" + s + ", \"password\" : \"" + encrypt(pass) + "\"}";
     }
 } 
